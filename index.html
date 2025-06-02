@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আকতা আল কুরআন | Akta Al Quran</title>
+    <style>
+        :root {
+            --primary: #2c786c;
+            --secondary: #004445;
+            --accent: #f8b400;
+            --light: #faf5e4;
+            --text: #333;
+            --text-light: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .main-content {
+            display: flex;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        
+        .surah-list {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .surah-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .surah-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .surah-item.active {
+            background-color: var(--light);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .surah-number {
+            background-color: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        .quran-display {
+            flex: 2;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .surah-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .surah-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .ayah {
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            text-align: right;
+            line-height: 2.2;
+            color: var(--secondary);
+        }
+        
+        .translation {
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 10px;
+            text-align: left;
+            padding-left: 20px;
+            border-left: 3px solid var(--light);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .search-box {
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 120, 108, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            color: var(--text-light);
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .surah-list, .quran-display {
+                width: 100%;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">আকতা আল কুরআন</div>
+            <div class="subtitle">The Holy Quran with Translation</div>
+            <div class="nav">
+                <button class="nav-btn" onclick="showSurahs()">সূরা সমূহ</button>
+                <button class="nav-btn" onclick="showJuz()">পারা</button>
+                <button class="nav-btn" onclick="showBookmarks()">বুকমার্ক</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="সূরা বা আয়াত খুঁজুন..." oninput="searchSurahs(this.value)">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="main-content">
+            <div class="surah-list" id="surahList">
+                <!-- Surah list will be populated by JavaScript -->
+            </div>
+            
+            <div class="quran-display" id="quranDisplay">
+                <div class="surah-title" id="surahTitle">সূরা নির্বাচন করুন</div>
+                <div class="surah-info" id="surahInfo">
+                    <span id="surahType">-</span>
+                    <span id="ayahCount">-</span>
+                </div>
+                <div id="ayahsContainer">
+                    <p style="text-align: center; color: var(--text-light);">বাম পাশ থেকে একটি সূরা নির্বাচন করুন</p>
+                </div>
+                <div class="controls">
+                    <button class="control-btn" onclick="prevSurah()">পূর্ববর্তী সূরা</button>
+                    <button class="control-btn" onclick="nextSurah()">পরবর্তী সূরা</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quran data - sample surahs with some ayahs
+        const quranData = [
+            {
+                number: 1,
+                name: "আল-ফাতিহা",
+                englishName: "Al-Fatiha",
+                englishNameTranslation: "The Opening",
+                numberOfAyahs: 7,
+                revelationType: "Meccan",
+                ayahs: [
+                    {
+                        number: 1,
+                        text: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+                        translation: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে"
+                    },
+                    {
+                        number: 2,
+                        text: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+                        translation: "সমস্ত প্রশংসা আল্লাহর জন্য, যিনি সকল সৃষ্টির পালনকর্তা।"
+                    },
+                    {
+                        number: 3,
+                        text: "الرَّحْمَٰنِ الرَّحِيمِ",
+                        translation: "যিনি পরম করুণাময়, অতি দয়ালু।"
+                    }
+                ]
+            },
+            {
+                number: 2,
+                name: "আল-বাকারা",
+                englishName: "Al-Baqara",
+                englishNameTranslation: "The Cow",
+                numberOfAyahs: 286,
+                revelationType: "Medinan",
+                ayahs: [
+                    {
+                        number: 1,
+                        text: "الم",
+                        translation: "আলিফ-লাম-মীম।"
+                    },
+                    {
+                        number: 2,
+                        text: "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِلْمُتَّقِينَ",
+                        translation: "এই কিতাব, এতে কোন সন্দেহ নেই, মুত্তাকীদের জন্য পথ নির্দেশক।"
+                    },
+                    {
+                        number: 3,
+                        text: "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنْفِقُونَ",
+                        translation: "যারা অদৃশ্যে বিশ্বাস করে, সালাত কায়েম করে এবং আমি তাদেরকে যে রিয্ক দিয়েছি তা থেকে ব্যয় করে।"
+                    }
+                ]
+            },
+            {
+                number: 36,
+                name: "ইয়াসীন",
+                englishName: "Yaseen",
+                englishNameTranslation: "Yaseen",
+                numberOfAyahs: 83,
+                revelationType: "Meccan",
+                ayahs: [
+                    {
+                        number: 1,
+                        text: "يس",
+                        translation: "ইয়া-সীন।"
+                    },
+                    {
+                        number: 2,
+                        text: "وَالْقُرْآنِ الْحَكِيمِ",
+                        translation: "প্রজ্ঞাময় কুরআনের শপথ।"
+                    },
+                    {
+                        number: 3,
+                        text: "إِنَّكَ لَمِنَ الْمُرْسَلِينَ",
+                        translation: "নিশ্চয়ই আপনি রাসূলগণের অন্তর্ভুক্ত।"
+                    }
+                ]
+            },
+            {
+                number: 55,
+                name: "আর-রহমান",
+                englishName: "Ar-Rahman",
+                englishNameTranslation: "The Beneficent",
+                numberOfAyahs: 78,
+                revelationType: "Medinan",
+                ayahs: [
+                    {
+                        number: 1,
+                        text: "الرَّحْمَٰنُ",
+                        translation: "পরম করুণাময় আল্লাহ।"
+                    },
+                    {
+                        number: 2,
+                        text: "عَلَّمَ الْقُرْآنَ",
+                        translation: "তিনি কুরআন শিক্ষা দিয়েছেন।"
+                    },
+                    {
+                        number: 3,
+                        text: "خَلَقَ الْإِنْسَانَ",
+                        translation: "তিনি মানুষ সৃষ্টি করেছেন।"
+                    }
+                ]
+            },
+            {
+                number: 112,
+                name: "আল-ইখলাস",
+                englishName: "Al-Ikhlas",
+                englishNameTranslation: "The Sincerity",
+                numberOfAyahs: 4,
+                revelationType: "Meccan",
+                ayahs: [
+                    {
+                        number: 1,
+                        text: "قُلْ هُوَ اللَّهُ أَحَدٌ",
+                        translation: "বলুন, তিনি আল্লাহ, একক।"
+                    },
+                    {
+                        number: 2,
+                        text: "اللَّهُ الصَّمَدُ",
+                        translation: "আল্লাহ অমুখাপেক্ষী।"
+                    },
+                    {
+                        number: 3,
+                        text: "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+                        translation: "তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি।"
+                    },
+                    {
+                        number: 4,
+                        text: "وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
+                        translation: "এবং তাঁর সমতুল্য কেউ নেই।"
+                    }
+                ]
+            }
+        ];
+
+        // DOM elements
+        const surahListEl = document.getElementById('surahList');
+        const surahTitleEl = document.getElementById('surahTitle');
+        const surahTypeEl = document.getElementById('surahType');
+        const ayahCountEl = document.getElementById('ayahCount');
+        const ayahsContainerEl = document.getElementById('ayahsContainer');
+        
+        let currentSurahIndex = 0;
+        
+        // Initialize the app
+        function init() {
+            renderSurahList();
+        }
+        
+        // Render surah list
+        function renderSurahList(filteredData = null) {
+            const dataToRender = filteredData || quranData;
+            surahListEl.innerHTML = '';
+            
+            dataToRender.forEach((surah, index) => {
+                const surahItem = document.createElement('div');
+                surahItem.className = 'surah-item';
+                surahItem.innerHTML = `
+                    <div>
+                        <strong>${surah.number}. ${surah.name}</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-light);">${surah.englishNameTranslation}</div>
+                    </div>
+                    <div class="surah-number">${surah.number}</div>
+                `;
+                
+                surahItem.addEventListener('click', () => {
+                    currentSurahIndex = index;
+                    renderSurah(surah);
+                    
+                    // Update active state
+                    document.querySelectorAll('.surah-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    surahItem.classList.add('active');
+                });
+                
+                surahListEl.appendChild(surahItem);
+            });
+        }
+        
+        // Render selected surah
+        function renderSurah(surah) {
+            surahTitleEl.textContent = `${surah.number}. ${surah.name} (${surah.englishName})`;
+            surahTypeEl.textContent = `প্রকাশ: ${surah.revelationType}`;
+            ayahCountEl.textContent = `আয়াত: ${surah.numberOfAyahs}`;
+            
+            ayahsContainerEl.innerHTML = '';
+            
+            surah.ayahs.forEach(ayah => {
+                const ayahEl = document.createElement('div');
+                ayahEl.className = 'ayah';
+                ayahEl.innerHTML = `
+                    <div>${ayah.text}</div>
+                    <div class="translation">${ayah.number}. ${ayah.translation}</div>
+                `;
+                ayahsContainerEl.appendChild(ayahEl);
+            });
+        }
+        
+        // Search surahs
+        function searchSurahs(query) {
+            if (!query) {
+                renderSurahList();
+                return;
+            }
+            
+            const filtered = quranData.filter(surah => 
+                surah.name.includes(query) || 
+                surah.englishName.toLowerCase().includes(query.toLowerCase()) ||
+                surah.englishNameTranslation.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            renderSurahList(filtered);
+        }
+        
+        // Navigation functions
+        function prevSurah() {
+            if (currentSurahIndex > 0) {
+                currentSurahIndex--;
+                const surah = quranData[currentSurahIndex];
+                renderSurah(surah);
+                updateActiveSurah();
+            }
+        }
+        
+        function nextSurah() {
+            if (currentSurahIndex < quranData.length - 1) {
+                currentSurahIndex++;
+                const surah = quranData[currentSurahIndex];
+                renderSurah(surah);
+                updateActiveSurah();
+            }
+        }
+        
+        function updateActiveSurah() {
+            document.querySelectorAll('.surah-item').forEach((item, index) => {
+                if (index === currentSurahIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        // Placeholder functions for nav buttons
+        function showSurahs() {
+            alert('সূরা তালিকা দেখানো হচ্ছে');
+        }
+        
+        function showJuz() {
+            alert('পারা ভিত্তিক তালিকা দেখানো হচ্ছে');
+        }
+        
+        function showBookmarks() {
+            alert('বুকমার্ক করা আয়াতসমূহ দেখানো হচ্ছে');
+        }
+        
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
